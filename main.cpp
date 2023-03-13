@@ -1,5 +1,7 @@
 #include <iostream>
+
 #include "wirelessXbee.h"
+
 
 float temp_ext;
 float hum_ext;
@@ -10,6 +12,7 @@ int main() {
     hum_ext = 50;
     temp_int = 22;
 
-    writeXbee(temp_ext, hum_ext, temp_int);
+    writeXbee();
+    std::cout<<"Hello World";
     return 0;
 }
