@@ -76,23 +76,6 @@ void writeXbee(std::string str, std::string& msg_out, std::string addresslow){
 
     msg_out[4] = result[0];
     msg_out[5] = result[1];
-
-    
-    
-    /*
-    hexstr[16+_j+1] = 0xFF - (_msg[16+_j+1]&0xFF);
-    */
-    /*
-    //Set transmission length
-    _msg[2] = 16+_j+1-3;
-    for(int i=0; i<_msg[2]+4; i++){
-        message[i] += _msg[i];
-    }
-    *n_message = _msg[2]+4;
-    for(int i=0;i<_msg[2]+4;i++){
-        //Serial.print(_msg[i],HEX);
-    }
-    */
 }
 
 
