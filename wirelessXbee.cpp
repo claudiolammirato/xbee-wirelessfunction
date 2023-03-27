@@ -4,9 +4,82 @@
 #include <iostream>
 #include <stdio.h>
 
-void writeXbee(char msg[]){
-    std::cout << msg;
-    std::cout << strlen(msg);    
+void writeXbee(std::string str, std::string& msg_out, std::string addresslow){
+    std::cout << str<<'\n';
+    //std::cout << str.length()<< '\n';
+    //hexstr = str + "_OUT";
+
+    int _j;
+    //0 byte
+    msg_out = msg_out + '7'; // Start Delimeter
+    msg_out = msg_out + 'E'; // Start Delimeter
+    //1 byte
+    msg_out = msg_out + '0'; // Start Delimeter
+    msg_out = msg_out + '0'; // Start Delimeter
+    //2 byte placeholder - at the end will be calculated the lenght in hex
+    msg_out = msg_out + '0'; // Start Delimeter
+    msg_out = msg_out + '0'; // Start Delimeter
+    //3 byte
+    msg_out = msg_out + '0'; // Start Delimeter
+    msg_out = msg_out + '0'; // Start Delimeter
+    //4 byte
+    msg_out = msg_out + '0'; // Start Delimeter
+    msg_out = msg_out + '1'; // Start Delimeter
+    //5 byte
+    msg_out = msg_out + '0'; // Start Delimeter
+    msg_out = msg_out + '0'; // Start Delimeter
+    //6 byte
+    msg_out = msg_out + '1'; // Start Delimeter
+    msg_out = msg_out + '3'; // Start Delimeter
+    //7 byte
+    msg_out = msg_out + 'A'; // Start Delimeter
+    msg_out = msg_out + '2'; // Start Delimeter
+    //8 byte
+    msg_out = msg_out + '0'; // Start Delimeter
+    msg_out = msg_out + '0'; // Start Delimeter
+    
+    //from 9 to 12 byte
+    for(int i = 0; i<addresslow.length(); i++){
+        msg_out = msg_out + addresslow[i];
+    }
+
+    //13 byte
+    msg_out = msg_out + 'F'; // Start Delimeter
+    msg_out = msg_out + 'F'; // Start Delimeter
+    //14 byte
+    msg_out = msg_out + 'F'; // Start Delimeter
+    msg_out = msg_out + 'E'; // Start Delimeter
+    //15 byte
+    msg_out = msg_out + '0'; // Start Delimeter
+    msg_out = msg_out + '0'; // Start Delimeter
+    //16 byte
+    msg_out = msg_out + '0'; // Start Delimeter
+    msg_out = msg_out + '0'; // Start Delimeter
+    
+   //message byte
+    msg_out = msg_out + str; // Start Delimeter
+
+   /*
+    
+    //Checksum Calculation
+    for(int i = 3; i<16+_j+1; i++ ){
+        _msg[16+_j+1] += _msg[i];//checksum
+    }
+    */
+    /*
+    hexstr[16+_j+1] = 0xFF - (_msg[16+_j+1]&0xFF);
+    */
+    /*
+    //Set transmission length
+    _msg[2] = 16+_j+1-3;
+    for(int i=0; i<_msg[2]+4; i++){
+        message[i] += _msg[i];
+    }
+    *n_message = _msg[2]+4;
+    for(int i=0;i<_msg[2]+4;i++){
+        //Serial.print(_msg[i],HEX);
+    }
+    */
 }
 
 
