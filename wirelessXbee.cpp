@@ -1,15 +1,13 @@
 #include "wirelessXbee.h"
-#include <string.h>
-#include <iomanip>
-#include <iostream>
-#include <stdio.h>
 
 void writeXbee(std::string str, std::string& msg_out, std::string addresslow){
-    std::cout << str<<'\n';
+    //std::cout << str<<'\n';
     //std::cout << str.length()<< '\n';
     //hexstr = str + "_OUT";
 
-    int _j;
+    std::string checksum;
+    int l;
+
     //0 byte
     msg_out = msg_out + '7'; // Start Delimeter
     msg_out = msg_out + 'E'; // Start Delimeter
@@ -20,7 +18,7 @@ void writeXbee(std::string str, std::string& msg_out, std::string addresslow){
     msg_out = msg_out + '0'; // Start Delimeter
     msg_out = msg_out + '0'; // Start Delimeter
     //3 byte
-    msg_out = msg_out + '0'; // Start Delimeter
+    msg_out = msg_out + '1'; // Start Delimeter
     msg_out = msg_out + '0'; // Start Delimeter
     //4 byte
     msg_out = msg_out + '0'; // Start Delimeter
@@ -58,14 +56,29 @@ void writeXbee(std::string str, std::string& msg_out, std::string addresslow){
     
    //message byte
     msg_out = msg_out + str; // Start Delimeter
-
-   /*
     
     //Checksum Calculation
-    for(int i = 3; i<16+_j+1; i++ ){
-        _msg[16+_j+1] += _msg[i];//checksum
+    for(int i = 6; i<34 + str.length() ; i+=2 ){
+        checksum = hexadd(checksum,msg_out.substr(i, 2));//checksum        
     }
-    */
+    checksum = checksum.substr(1,2); 
+    checksum = hexmin("FF" , checksum);
+
+    msg_out = msg_out + checksum;
+    
+    //Length calculation
+    l = (msg_out.length()-8)/2;
+    //std::cout << typeid(l).name()<<'\n';
+    std::stringstream stream;
+    stream << std::uppercase << std::hex << l;
+    std::string result( stream.str() );
+    //std::cout << result <<'\n';
+
+    msg_out[4] = result[0];
+    msg_out[5] = result[1];
+
+    
+    
     /*
     hexstr[16+_j+1] = 0xFF - (_msg[16+_j+1]&0xFF);
     */
@@ -108,4 +121,43 @@ void hex2stream(const std::string hexstr, std::string& str)
         str[i] = (hexstr[j] & '@' ? hexstr[j] + 9 : hexstr[j]) << 4, j++;
         str[i] |= (hexstr[j] & '@' ? hexstr[j] + 9 : hexstr[j]) & 0xF;
     }
+}
+
+
+std::string hexadd(const std::string & hex1, const std::string & hex2)
+{
+	long n1, n2;
+	n1 = hex2dec(hex1);
+	n2 = hex2dec(hex2);
+	return dec2hex(n1+n2);
+}
+
+std::string hexmin(const std::string & hex1, const std::string & hex2)
+{
+	long n1, n2;
+	n1 = hex2dec(hex1);
+	n2 = hex2dec(hex2);
+	return dec2hex(n1-n2);
+}
+
+std::string dec2hex(long i)
+{
+	std::stringstream ss;
+	std::string s;
+	hex(ss);
+	uppercase(ss);
+	ss << i;
+	ss >> s;
+	return s;
+}
+
+long hex2dec(const std::string & hexstr)
+{
+	std::stringstream ss;
+	long i = 0;
+	hex(ss);
+	ss << hexstr;
+	ss.clear();
+	ss >> i;
+	return i;
 }

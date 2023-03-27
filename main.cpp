@@ -17,6 +17,8 @@ int main() {
     temp_int = 22;
     //Prepare the String to convert
     std::string msg_string="Claudio_" + std::to_string(temp_ext);
+    std::cout << "XBEE: " << msg_string << '\n';
+
     std::string msg_hex;
     std::string msg_out;
 
@@ -31,6 +33,7 @@ int main() {
 
     writeXbee(msg_hex,msg_out, addresslow);
     std::cout << "XBEE: " << msg_out << '\n';
+
 
 
     return 0;
