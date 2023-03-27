@@ -15,7 +15,7 @@ int main() {
     temp_int = 22;
 
     std::string msg="Claudio";
-    stream2hex(msg, msg, false);
+    stream2hex(msg, msg, true);
     std::cout << "hex format: " << msg << '\n';
     hex2stream(msg, msg);
     std::cout << "original one: " << msg << '\n';
