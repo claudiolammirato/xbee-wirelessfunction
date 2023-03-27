@@ -34,8 +34,6 @@ int main() {
     writeXbee(msg_hex,msg_out, addresslow);
     std::cout << "XBEE: " << msg_out << '\n';
 
-
-
     return 0;
 }
 
