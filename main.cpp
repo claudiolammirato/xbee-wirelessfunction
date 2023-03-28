@@ -12,7 +12,7 @@ std::string addresslow = "407C6019";
 
 
 int main() {
-    temp_ext = 25.6;
+    temp_ext = 21.299999;
     hum_ext = 50;
     temp_int = 22;
     //Prepare the String to convert

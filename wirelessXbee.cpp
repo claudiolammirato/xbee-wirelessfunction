@@ -61,8 +61,18 @@ void writeXbee(std::string str, std::string& msg_out, std::string addresslow){
     for(int i = 6; i<34 + str.length() ; i+=2 ){
         checksum = hexadd(checksum,msg_out.substr(i, 2));//checksum        
     }
-    checksum = checksum.substr(1,2); 
+    std::cout << checksum<<'\n';
+    if (checksum.length()>2){
+        checksum = checksum.substr(1,2); 
+    }else{
+        checksum = checksum.substr(0,2); 
+    }
+    std::cout << checksum<<'\n';
+    
+    checksum = hexand(checksum, "FF");
+    std::cout << checksum<<'\n';
     checksum = hexmin("FF" , checksum);
+    std::cout << checksum<<'\n';
 
     msg_out = msg_out + checksum; // Checksum
     
@@ -121,6 +131,14 @@ std::string hexmin(const std::string & hex1, const std::string & hex2)
 	n1 = hex2dec(hex1);
 	n2 = hex2dec(hex2);
 	return dec2hex(n1-n2);
+}
+
+std::string hexand(const std::string & hex1, const std::string & hex2)
+{
+	long n1, n2;
+	n1 = hex2dec(hex1);
+	n2 = hex2dec(hex2);
+	return dec2hex(n1&&n2);
 }
 
 std::string dec2hex(long i)

@@ -17,6 +17,8 @@ std::string dec2hex(long a);
 long hex2dec(const std::string & hexstr);
 std::string hexadd(const std::string & hex1, const std::string & hex2);
 std::string hexmin(const std::string & hex1, const std::string & hex2);
+std::string hexand(const std::string & hex1, const std::string & hex2);
+
 
 
 
